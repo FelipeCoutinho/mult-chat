@@ -1,6 +1,8 @@
 const server = require('express')()
+const socket = require('socket.io')
 const bodyparser = require('body-parser')
 const { static } = require('express')
+
 const port = 3001
     //Template de views
     server.set('view egnine','ejs')
@@ -15,10 +17,14 @@ const port = 3001
     //Rotas dos arquivos stativos
     server.use(static('./src/public'))
     
+
+
     //Inicialização do servidor
-    server.listen(port,() =>{
+    const  servidor = server.listen(port,() =>{
         console.log(`server on - porta: ${port}`);
     })
-
+    
+    //faz com que o servidor responda dois protocolos diferentes na mesma porta 
+    socket.listen(servidor)
 
 module.exports = server

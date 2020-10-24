@@ -5,7 +5,7 @@ module.exports.chat = (req,res,app) => {
 
     console.log(Apelido.length);
 
-    if(Apelido==='' || ( Apelido.length <3 || Apelido.length >15) ){
+    if(Apelido==='' || ( Apelido.length < 3 || Apelido.length >15) ){
         
         console.log("erro");
         const msgErr = 'Informe o nome ou apelido valido'
