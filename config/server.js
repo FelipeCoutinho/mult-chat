@@ -25,6 +25,16 @@ const port = 3001
     })
     
     //faz com que o servidor responda dois protocolos diferentes na mesma porta 
-    socket.listen(servidor)
+    const io = socket.listen(servidor)
+    
+    //criar a conexão por web socket    
+     io.on('connection',(conexao) => {
+        console.log('Usuario connectou');
+
+        conexao.on('disconnect',() => {
+            console.log('usuario desconectou!');
+        })
+        
+     })
 
 module.exports = server
