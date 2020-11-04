@@ -1,4 +1,6 @@
-module.exports.chat = (req,res,app) => {
+const { emit } = require("../../config/server");
+
+module.exports.chat = (req,res,server) => {
     
     const {apelido} = req.body;
     const Apelido = apelido
@@ -13,7 +15,9 @@ module.exports.chat = (req,res,app) => {
         res.render('./index.ejs', {validacao:msgErr})
         return;
     }
-       
+    
+    server.get('io').emit('msgParaCliente','teste')
+
     res.render('./chat.ejs')
 
 

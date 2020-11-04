@@ -27,6 +27,9 @@ const port = 3001
     //faz com que o servidor responda dois protocolos diferentes na mesma porta 
     const io = socket.listen(servidor)
     
+    //Criando um variavel global para usar o soket em qualquer parte do sistema 
+    server.set('io', io)// o set tambem permite criar variaveis que passarão a existir dentro do servidor
+
     //criar a conexão por web socket    
      io.on('connection',(conexao) => {
         console.log('Usuario connectou');
@@ -34,7 +37,7 @@ const port = 3001
         conexao.on('disconnect',() => {
             console.log('usuario desconectou!');
         })
-        
+
      })
 
 module.exports = server

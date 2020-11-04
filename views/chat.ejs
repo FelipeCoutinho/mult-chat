@@ -146,7 +146,9 @@
 		<script>
 			// instancia do opbjeto IO
 			const socket = io('http://localhost:3001')
-			
+			socket.on('msgParaCliente',(data) => {
+				alert(data)
+			})
 		</script>
 	</body>
 </html>
