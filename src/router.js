@@ -6,8 +6,7 @@ const controllerChat =  require('./controllers/chat')
 
 
 router.get('/',(req,res) => {
-    controllerIndex.index(req,res,server)
-    
+    controllerIndex.index(req,res,server)   
 })
 
 

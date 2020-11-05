@@ -81,7 +81,7 @@
                 
             </div>
 			
-			<div class="row participantes" id="participantes" style="display:none">
+			<!-- <div class="row participantes" id="participantes" style="display:none">
 				<div class="col-md-1"></div>
 				<div class="col-md-10">
 					<span class="participante">
@@ -101,22 +101,24 @@
 				</div>
 				<div class="col-md-1"></div>
                 
-            </div>
+            </div> -->
         </div>
 		
 		<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 			<div class="container">
 				<div class="panel-body campo-mensagem">
-					<form>
-						<div class="col-md-12">
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Mensagem" id="txtMensagem">
-								<span class="input-group-btn">
-									<button class="btn btn-default" type="button" id="btnEnviar">></button>
-								</span>
-							</div>
+					<!-- <form> -->
+					<div class="col-md-12">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Mensagem" id="txtMensagem">
+							<input type="hidden"id="apelido" value=<%= dadosForm.apelido %> >
+							
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" id="btnEnviar">></button>
+							</span>
 						</div>
-					</form>
+					</div>
+					<!-- </form> -->
 				</div>
 			</div>
 		</nav>		
@@ -127,37 +129,44 @@
 		<script src="/socket.io/socket.io.js"></script>
 		
 		<script>
+			
 			// instancia do opbjeto IO
 			// Atribui a instancia do objeto io que esta dentro do arquivo js: /socket.io/socket.io.js
 			// A instancio io espera um endereço onde ele vai encontrar uma conexão, um websoket para se comunicar, neste caso é o localhost
+			
 			const socket = io('http://localhost:3001') // faz atentativa de conexão
-			
-			const divDialogo = document.getElementById('dialogo')
-
-			socket.on('msgParaCliente',(data) => {
-
-				let msg = document.createTextNode(`${data.msg})`)
-				let nome = document.createTextNode(`${data.apelido}`)
-
-				const h4 = document.createElement('h4')
-				h4.appendChild(nome)
-
-				const p   = document.createElement('p')
-				p.appendChild(msg)
-
-				divDialogo.appendChild(h4)
-				divDialogo.appendChild(p)
-				
-				
-			})
-			
+			const divDialogos = document.getElementById('dialogos')
 			const btnEnviar = document.getElementById('btnEnviar')
-			
-			btnEnviar.addEventListener("click", () => {
-				let mensagem = document.getElementById('txtMensagem').value
 
-				socket.emit('msgParaServidor',{apelido:'', msg:mensagem})
-			})
+				socket.on('msgParaCliente',(data) => {
+
+					let msg = document.createTextNode(`${data.msg})`)
+					let nome = document.createTextNode(`${data.apelido}`)
+
+					const h4 = document.createElement('h4')
+					h4.appendChild(nome)
+
+					const p   = document.createElement('p')
+					p.appendChild(msg)
+
+					const divDialogo = document.createElement('div')
+
+					divDialogo.setAttribute('class','dialogo')
+					divDialogo.setAttribute('id','dialogo')
+					divDialogo.appendChild(h4)
+					divDialogo.appendChild(p)
+					
+					divDialogos.appendChild(divDialogo)
+				})
+				
+				
+				btnEnviar.addEventListener("click", () => {
+
+					let mensagem = document.getElementById('txtMensagem').value
+					let apelido = document.getElementById('apelido').value
+					socket.emit('msgParaServidor',{apelido:apelido, msg:mensagem})
+			
+				})
 			
 
 		</script>
