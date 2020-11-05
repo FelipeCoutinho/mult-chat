@@ -45,6 +45,11 @@ const port = 3001
             console.log('usuario desconectou!');
         })
 
-     })
-
+        
+        soket.on('msgParaServidor',(data) => {
+            console.log(data.msg);
+            soket.emit('msgParaCliente',{apelido: data.apelido, msg:data.msg })
+        })
+        
+    })
 module.exports = server

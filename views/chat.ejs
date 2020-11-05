@@ -110,9 +110,9 @@
 					<form>
 						<div class="col-md-12">
 							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Mensagem">
+								<input type="text" class="form-control" placeholder="Mensagem" id="txtMensagem">
 								<span class="input-group-btn">
-									<button class="btn btn-default" type="button">></button>
+									<button class="btn btn-default" type="button" id="btnEnviar">></button>
 								</span>
 							</div>
 						</div>
@@ -132,24 +132,35 @@
 			// A instancio io espera um endereço onde ele vai encontrar uma conexão, um websoket para se comunicar, neste caso é o localhost
 			const socket = io('http://localhost:3001') // faz atentativa de conexão
 			
-			
+			const divDialogo = document.getElementById('dialogo')
+
 			socket.on('msgParaCliente',(data) => {
 
-				let msg = document.createTextNode(`acabou de entar no chat`)
+				let msg = document.createTextNode(`${data.msg})`)
 				let nome = document.createTextNode(`${data.apelido}`)
 
-				const divDialogo = document.getElementById('dialogo')
-				const h1 = document.createElement('h4')
-				h1.appendChild(nome)
+				const h4 = document.createElement('h4')
+				h4.appendChild(nome)
 
 				const p   = document.createElement('p')
 				p.appendChild(msg)
 
-				divDialogo.appendChild(h1)
+				divDialogo.appendChild(h4)
 				divDialogo.appendChild(p)
-
-
+				
+				
 			})
+			
+			const btnEnviar = document.getElementById('btnEnviar')
+			
+			btnEnviar.addEventListener("click", () => {
+				let mensagem = document.getElementById('txtMensagem').value
+
+				socket.emit('msgParaServidor',{apelido:'', msg:mensagem})
+			})
+			
+
 		</script>
+		
 	</body>
 </html>
