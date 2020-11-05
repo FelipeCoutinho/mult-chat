@@ -142,10 +142,15 @@
 		</nav>		
 		
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		
+		<!-- recupera o js do lado do servidor// serve para escutar e emitir eventos -->
 		<script src="/socket.io/socket.io.js"></script>
+		
 		<script>
 			// instancia do opbjeto IO
-			const socket = io('http://localhost:3001')
+			// Atribui a instancia do objeto io que esta dentro do arquivo js: /socket.io/socket.io.js
+			// A instancio io espera um endereço onde ele vai encontrar uma conexão um websoket para se comunicar, neste caso é o local host
+			const socket = io('http://localhost:3001') 
 			socket.on('msgParaCliente',(data) => {
 				alert(data)
 			})

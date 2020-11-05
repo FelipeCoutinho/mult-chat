@@ -30,6 +30,8 @@ const port = 3001
     //Criando um variavel global para usar o soket em qualquer parte do sistema 
     server.set('io', io)// o set tambem permite criar variaveis que passarão a existir dentro do servidor
 
+    server.set('porta','porta 3001')
+    
     //criar a conexão por web socket    
      io.on('connection',(conexao) => {
         console.log('Usuario connectou');
