@@ -49,6 +49,9 @@ const port = 3001
         soket.on('msgParaServidor',(data) => {
             console.log(data.msg);
             soket.emit('msgParaCliente',{apelido: data.apelido, msg:data.msg })
+            
+            // emite a mensagem em formato broadcast, para todos os clientes conectados ao soket
+            soket.broadcast.emit('msgParaCliente',{apelido: data.apelido, msg:data.msg })
         })
         
     })

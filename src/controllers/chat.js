@@ -22,5 +22,5 @@ module.exports.chat = (req,res,server) => {
         msg:"acabou de entrar no char!"
     })
 
-    res.render('./chat.ejs')
+    res.render('./chat.ejs', `${dadosForm.apelido}`)
 }
