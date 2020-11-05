@@ -71,30 +71,10 @@
 		<div class="container">
             <div class="row conversa" id="conversa">
 				<div class="col-md-1"></div>
-				<div class="col-md-10">
-					<div class="dialogo">
-						<h4>Jorge</h4>
-						<p>Fala José, blz cara?</p>
-					</div>
-					
-					<div class="dialogo">
-						<h4>José</h4>
-						<p>Opa, tudo certo!</p>
-					</div>
-					
-					<div class="dialogo">
-						<h4>Jorge</h4>
-						<p>Vai estudar mais sobre NodeJS hoje?</p>
-					</div>
-					
-					<div class="dialogo">
-						<h4>José</h4>
-						<p>Sim, com certeza. Vamos trabalhar com Websockets hoje, o assunto é bem interessante</p>
-					</div>
-					
-					<div class="dialogo">
-						<h4>Jorge</h4>
-						<p>Show de bola, comunicação bi-direcional em páginas ou sistemas web é muito bacana mesmo</p>
+				<div class="col-md-10" id="dialogos">
+					<div class="dialogo" id="dialogo">
+						<!-- <h4>Jorge</h4>
+						<p>Fala José, blz cara?</p> -->
 					</div>
 				</div>
 				<div class="col-md-1"></div>
@@ -149,10 +129,26 @@
 		<script>
 			// instancia do opbjeto IO
 			// Atribui a instancia do objeto io que esta dentro do arquivo js: /socket.io/socket.io.js
-			// A instancio io espera um endereço onde ele vai encontrar uma conexão um websoket para se comunicar, neste caso é o local host
-			const socket = io('http://localhost:3001') 
+			// A instancio io espera um endereço onde ele vai encontrar uma conexão, um websoket para se comunicar, neste caso é o localhost
+			const socket = io('http://localhost:3001') // faz atentativa de conexão
+			
+			
 			socket.on('msgParaCliente',(data) => {
-				alert(data)
+
+				let msg = document.createTextNode(`acabou de entar no chat`)
+				let nome = document.createTextNode(`${data.apelido}`)
+
+				const divDialogo = document.getElementById('dialogo')
+				const h1 = document.createElement('h4')
+				h1.appendChild(nome)
+
+				const p   = document.createElement('p')
+				p.appendChild(msg)
+
+				divDialogo.appendChild(h1)
+				divDialogo.appendChild(p)
+
+
 			})
 		</script>
 	</body>

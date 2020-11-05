@@ -2,12 +2,12 @@ const { emit } = require("../../config/server");
 
 module.exports.chat = (req,res,server) => {
     
-    const {apelido} = req.body;
-    const Apelido = apelido
+    const dadosForm = req.body;
 
-    console.log(Apelido.length);
 
-    if(Apelido==='' || ( Apelido.length < 3 || Apelido.length >15) ){
+    console.log(dadosForm.apelido.length);
+    // validação 
+    if(dadosForm.apelido==='' || ( dadosForm.apelido.length < 3 || dadosForm.apelido.length >15) ){
         
         console.log("erro");
         const msgErr = 'Informe o nome ou apelido valido'
@@ -16,9 +16,11 @@ module.exports.chat = (req,res,server) => {
         return;
     }
     
-    server.get('io').emit('msgParaCliente','teste')
+
+    server.get('io').emit('msgParaCliente',{
+        apelido:dadosForm.apelido,
+        msg:"acabou de entrar no char!"
+    })
 
     res.render('./chat.ejs')
-
-
 }

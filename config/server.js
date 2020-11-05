@@ -2,6 +2,7 @@ const server = require('express')()
 const socket = require('socket.io')
 const bodyparser = require('body-parser')
 const { static } = require('express')
+const { on } = require('nodemon')
 
 const port = 3001
     //Template de views
@@ -24,19 +25,23 @@ const port = 3001
         console.log(`server on - porta: ${port}`);
     })
     
-    //faz com que o servidor responda dois protocolos diferentes na mesma porta 
+    //faz com que o servidor responda dois protocolos (htttp e websoket) diferentes na mesma porta 
     const io = socket.listen(servidor)
     
     //Criando um variavel global para usar o soket em qualquer parte do sistema 
     server.set('io', io)// o set tambem permite criar variaveis que passarão a existir dentro do servidor
 
-    server.set('porta','porta 3001')
+    server.set('porta',`${port}`) //  teste de criação de variaveis globais
     
     //criar a conexão por web socket    
-     io.on('connection',(conexao) => {
+    //  on indica que estamos escutando eventos de conexao 
+    // o evento connection é um evento predefinido do socket.io, que é pesquisado quando quando uma tentativa
+    // de conexao é feita do lado do cliente
+    // sintaxe on(nomeEvento, callback)
+     io.on('connection',(soket) => {
         console.log('Usuario connectou');
 
-        conexao.on('disconnect',() => {
+        soket.on('disconnect',() => {
             console.log('usuario desconectou!');
         })
 
