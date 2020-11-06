@@ -81,27 +81,17 @@
                 
             </div>
 			
-			<!-- <div class="row participantes" id="participantes" style="display:none">
+			<div class="row participantes" id="participantes" style="display:none">
 				<div class="col-md-1"></div>
-				<div class="col-md-10">
-					<span class="participante">
+				<div class="col-md-10" id="addPareticipante">
+					<!-- <span class="participante" id="perticipante">
 						<img src="images/ico_usuario.png" />
 						Jorge
-					</span>
-					
-					<span class="participante">
-						<img src="images/ico_usuario.png" />
-						José
-					</span>
-					
-					<span class="participante">
-						<img src="images/ico_usuario.png" />
-						Fernando
-					</span>
+					</span> -->
 				</div>
 				<div class="col-md-1"></div>
                 
-            </div> -->
+            </div>
         </div>
 		
 		<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
@@ -112,6 +102,7 @@
 						<div class="input-group">
 							<input type="text" class="form-control" placeholder="Mensagem" id="txtMensagem">
 							<input type="hidden"id="apelido" value=<%= dadosForm.apelido %> >
+							<input type="hidden"id="apelidoAtualizadoNosClientes" value=0 >
 							
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="button" id="btnEnviar">></button>
@@ -140,34 +131,53 @@
 
 				socket.on('msgParaCliente',(data) => {
 
-					let msg = document.createTextNode(`${data.msg})`)
-					let nome = document.createTextNode(`${data.apelido}`)
-
 					const h4 = document.createElement('h4')
-					h4.appendChild(nome)
-
 					const p   = document.createElement('p')
-					p.appendChild(msg)
-
 					const divDialogo = document.createElement('div')
+					
+					let nome = document.createTextNode(`${data.apelido}`)
+					let msg = document.createTextNode(`${data.msg})`)
+
+					h4.appendChild(nome)
+					p.appendChild(msg)
 
 					divDialogo.setAttribute('class','dialogo')
 					divDialogo.setAttribute('id','dialogo')
+
 					divDialogo.appendChild(h4)
 					divDialogo.appendChild(p)
-					
 					divDialogos.appendChild(divDialogo)
+
 				})
 				
 				
 				btnEnviar.addEventListener("click", () => {
 
 					let mensagem = document.getElementById('txtMensagem').value
+					let apelidoAtualizado = document.getElementById('apelidoAtualizadoNosClientes').value
 					let apelido = document.getElementById('apelido').value
-					socket.emit('msgParaServidor',{apelido:apelido, msg:mensagem})
-			
+					console.log(apelidoAtualizado);
+					socket.emit('msgParaServidor',{apelido:apelido, msg:mensagem, apelidoAtualizado:apelidoAtualizado})
+					
+					document.getElementById('apelidoAtualizadoNosClientes').value = 1
+					//console.log(apelidoAtualizado);
 				})
-			
+
+				socket.on('participanteParaCliente',(data) => {					
+					// if(1<2)
+					let apelido = document.createTextNode(data.apelido)
+					const divParticipantes = document.getElementById('addPareticipante')
+					const spanParticipante = document.createElement('span')
+					const img = document.createElement('img')
+
+					spanParticipante.setAttribute('class','participante')
+					img.setAttribute('src','images/ico_usuario.png')
+
+					spanParticipante.appendChild(img)
+					console.log(apelido);
+					spanParticipante.appendChild(apelido)
+					divParticipantes.appendChild(spanParticipante)
+				})
 
 		</script>
 		

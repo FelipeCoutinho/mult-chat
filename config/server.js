@@ -4,7 +4,7 @@ const bodyparser = require('body-parser')
 const { static } = require('express')
 const { on } = require('nodemon')
 
-const port = 3001
+    const port = 3001
     //Template de views
     server.set('view egnine','ejs')
     server.set('views', './views')
@@ -45,14 +45,25 @@ const port = 3001
             console.log('usuario desconectou!');
         })
 
-        
         soket.on('msgParaServidor',(data) => {
-            console.log(data.msg);
+            //dialogo
+            // console.log(data.msg);
             soket.emit('msgParaCliente',{apelido: data.apelido, msg:data.msg })
             
-            // emite a mensagem em formato broadcast, para todos os clientes conectados ao soket
+            // emite a mensagem em formato broadcast, para todos os participantes conectados ao soket
             soket.broadcast.emit('msgParaCliente',{apelido: data.apelido, msg:data.msg })
+
+            //Participante
+            console.log(data.apelidoAtualizado);
+            if(parseInt(data.apelidoAtualizado)==0){
+
+                // console.log(data.msg);
+                soket.emit('participanteParaCliente',{apelido: data.apelido, apelidoAtualizado:data.apelidoAtualizado})
+                
+                soket.broadcast.emit('participanteParaCliente',{apelido: data.apelido, apelidoAtualizado:data.apelidoAtualizado})
+            }
         })
+
         
     })
 module.exports = server

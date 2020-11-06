@@ -23,4 +23,5 @@ module.exports.chat = (req,res,server) => {
     })
 
     res.render('./chat.ejs', {dadosForm:dadosForm})
+    
 }
