@@ -148,6 +148,7 @@
 					divDialogo.appendChild(p)
 					divDialogos.appendChild(divDialogo)
 
+					window.scrollBy(0, document.body.scrollHeight)
 				})
 				
 				
@@ -160,6 +161,9 @@
 					socket.emit('msgParaServidor',{apelido:apelido, msg:mensagem, apelidoAtualizado:apelidoAtualizado})
 					
 					document.getElementById('apelidoAtualizadoNosClientes').value = 1
+					document.getElementById('txtMensagem').value=""
+
+
 					//console.log(apelidoAtualizado);
 				})
 
